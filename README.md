@@ -15,7 +15,7 @@ when one of these is done update it here like this
 - make script that converts a graph to walls (note that wherever there is an edge there should be a wall)
 
 ## things to do after that
-- add maze tiles based on proximity
+- generate maze tiles based on proximity
 - add connections between walls(could be done at tile creation)
 
 ## optional things at end

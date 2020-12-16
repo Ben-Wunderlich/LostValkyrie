@@ -12,7 +12,7 @@ public class Node
         vals = location;
     }
 
-    public void addAdj(Node newNeighbor)
+    public void AddAdj(Node newNeighbor)
     {
         adjNodes.Add(newNeighbor);
     }
@@ -22,12 +22,12 @@ public class Node
         return adjNodes;
     }*/
 
-    public void removeAdj(Node formerNeighbor)
+    public void RemoveAdj(Node formerNeighbor)
     {
         adjNodes.Remove(formerNeighbor);
     }
 
-    public bool has(Node maybeNeighbor)
+    public bool Has(Node maybeNeighbor)
     {
         return adjNodes.Contains(maybeNeighbor);
     }

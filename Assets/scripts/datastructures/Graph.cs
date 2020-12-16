@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Text;
 public class Graph
 {
-    public int numVertices = 0;
+    private readonly int numVertices;
     public Dictionary<(int, int), Node> vertices = new Dictionary<(int, int), Node>();
 
 
@@ -13,37 +14,87 @@ public class Graph
 
     public Graph(int width, int height)
     {
-       // Debug.Log("numnodes is " + numNodes);
-       for(int i=0; i < width; i++)
+        // Debug.Log("numnodes is " + numNodes);
+        numVertices = width * height;
+        for(int i=0; i < width; i++)
         {
             for(int j = 0; j < height; j++)
             {
-                vertices.Add((i, j), new Node((i, j)));
+                AddVertex((i, j));
             }
         }
     }
 
-    public void addEdge((int, int) from, (int, int) to)
+    private Node AddVertex((int,int) coords)
+    {
+        Node newNode = new Node((coords.Item1, coords.Item2));
+        vertices.Add((coords.Item1, coords.Item2), newNode);
+        return newNode;
+    }
+
+    public void AddEdge((int, int) from, (int, int) to)
+    {
+        Node fromNode;
+        Node toNode;
+        if (vertices.ContainsKey(from))
+        {
+            fromNode = vertices[from];
+        }
+        else
+        {
+            fromNode = AddVertex(from);
+        }
+
+        if (vertices.ContainsKey(to))
+        {
+            toNode = vertices[to];
+        }
+        else
+        {
+            toNode = AddVertex(to);
+        }
+
+        fromNode.AddAdj(toNode);
+        toNode.AddAdj(fromNode);
+    }
+
+    public void RemoveEdge((int, int) from, (int, int) to)
     {
         Node fromNode = vertices[from];
         Node toNode = vertices[to];
 
-        fromNode.addAdj(toNode);
-        toNode.addAdj(fromNode);
+        fromNode.RemoveAdj(toNode);
+        toNode.RemoveAdj(fromNode);
     }
 
-    public void removeEdge((int, int) from, (int, int) to)
+    public void RemoveEdge(Node from, Node to)
     {
-        Node fromNode = vertices[from];
-        Node toNode = vertices[to];
-
-        fromNode.removeAdj(toNode);
-        toNode.removeAdj(fromNode);
+        from.RemoveAdj(to);
+        to.RemoveAdj(from);
     }
 
-    public List<(int, int)> getNodes()
+    public List<(int, int)> GetNodes()
     {
         return vertices.Keys.ToList();
     }
 
+    public Node GetSomeVertice()
+    {
+        return vertices.Values.First();
+    }
+
+    public string ToStr()
+    {
+        StringBuilder sb = new StringBuilder(numVertices*10);
+        foreach(Node val in vertices.Values)
+        {
+            sb.Append(val.vals.ToString()+ " is linked to ");
+            foreach(Node neighbor in val.adjNodes)
+            {
+                sb.Append(neighbor.vals.ToString()+", ");
+            }
+            sb.Append("\n");
+        }
+        return sb.ToString();
+    }
 }

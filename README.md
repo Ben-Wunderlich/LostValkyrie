@@ -12,7 +12,7 @@ You won't be able to contribute to the repo yet, let me know what your github ac
 when one of these is done update it here like this
 - ~~make todo list~~
 - make player script to move around
-- create graph data structure
+- ~~create graph data structure~~
 - create disjoint set data structure
 - bring over maze generation logic from the python project
 - make basic wall assets

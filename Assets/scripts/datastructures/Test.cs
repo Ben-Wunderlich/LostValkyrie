@@ -16,8 +16,8 @@ public class Test : MonoBehaviour
     public VariableHolder mazeSettings = new VariableHolder();
 
 
-    public int width=10;
-    public int height = 10;
+    public int width=15;
+    public int height = 15;
     public float expand = 1;
     public bool makeMaze = false;
 
@@ -39,8 +39,12 @@ public class Test : MonoBehaviour
 
     void Start()
     {
-        //Graph g = Mazes.PrimPath(width, height);
-        Graph g = Mazes.DfsPath(width, height);
+        if (makeMaze)
+        {
+            return;//will be drawn on second frame anyway
+        }
+        Graph g = Mazes.PrimPath(width, height);
+        //Graph g = Mazes.DfsPath(width, height);
         //Graph g = Mazes.BaseGraph(width, height);
         GraphCheck(g);
         //Debug.Log(g.ToStr());
@@ -86,7 +90,7 @@ public class Test : MonoBehaviour
             }
             //Graph g = Mazes.PrimPath(width, height);
             //Debug.Log(g.ToStr());
-            if(!mazeSettings.dfs && !mazeSettings.prims && !mazeSettings.grid)
+            if(!(mazeSettings.dfs || mazeSettings.prims || mazeSettings.grid))
             {
                 Graph nuall = new Graph(10, 10);
                 nuall.AddEdge((0,0), (0,9));

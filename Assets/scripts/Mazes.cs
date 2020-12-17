@@ -26,6 +26,9 @@ public static class Mazes
         return g;
     }
 
+    /**
+     * Does not work the way the name would make you thing, makes it look a bit nicer but thats all
+     */
     static void AddBorder(Graph g, int width, int height)
     {
         for (int i = 0; i < width - 1; i++)

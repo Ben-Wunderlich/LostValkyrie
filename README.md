@@ -17,9 +17,9 @@ when one of these is done update it here like this
 - bring over maze generation logic from the python project
 
 
-   dfs  
-   ~~prims~~  
-   kris kringle  
+   1. dfs  
+   2. ~~prims~~  
+   3. kris kringle  
    
 - make basic wall assets
 - make script that converts a graph to walls (note that wherever there is an edge there should be a wall)

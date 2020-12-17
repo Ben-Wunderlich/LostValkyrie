@@ -15,9 +15,12 @@ when one of these is done update it here like this
 - ~~create graph data structure~~
 - create disjoint set data structure
 - bring over maze generation logic from the python project
-* dfs
-* prims
-* kris kringle
+
+
+   dfs
+   prims
+   kris kringle
+   
 - make basic wall assets
 - make script that converts a graph to walls (note that wherever there is an edge there should be a wall)
 

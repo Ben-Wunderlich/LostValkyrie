@@ -212,13 +212,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484679875}
-  m_LocalRotation: {x: 0, y: 0.31208622, z: 0, w: 0.9500538}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 36.37, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &484679880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +231,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3f0c5c395f374b429caf23794e6afb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mazeSettings:
+    grid: 0
+    dfs: 0
+    prims: 0
+  width: 10
+  height: 10
+  expand: 1
+  makeMaze: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,13 +407,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.21695076, y: 0, z: 0, w: 0.9761826}
-  m_LocalPosition: {x: 0, y: 6.12, z: -10}
+  m_LocalRotation: {x: 0.19383937, y: 0.27038437, z: -0.055674072, w: 0.9413921}
+  m_LocalPosition: {x: 1.1, y: 23.2, z: -27.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 25.06, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 23.27, y: 32.05, z: 0}
 --- !u!1 &1419783452
 GameObject:
   m_ObjectHideFlags: 0

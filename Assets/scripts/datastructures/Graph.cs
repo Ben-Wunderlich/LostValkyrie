@@ -83,6 +83,15 @@ public class Graph
         return vertices.Values.First();
     }
 
+    /**
+     * removed dual links so they are all one way
+     * XXX not finished, feel free to complete it, whoever is reading this
+     */
+    public Graph GetReduced()
+    {
+        return this;
+    }
+
     public string ToStr()
     {
         StringBuilder sb = new StringBuilder(numVertices*10);

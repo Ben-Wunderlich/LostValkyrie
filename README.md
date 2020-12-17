@@ -23,6 +23,7 @@ when one of these is done update it here like this
    
 - make basic wall assets
 - make script that converts a graph to walls (note that wherever there is an edge there should be a wall)
+- add outer walls for each maze tile
 
 ## things to do after that
 - generate maze tiles based on proximity

@@ -80,7 +80,8 @@ public class Test : MonoBehaviour
             }
             if (mazeSettings.dfs)
             {
-                Graph dfs = Mazes.DfsPath(width, height);
+                //Graph dfs = Mazes.DfsPath(width, height);
+                Graph dfs = Mazes.DfsIter(width, height);
                 GraphCheck(dfs);
             }
             if (mazeSettings.prims)

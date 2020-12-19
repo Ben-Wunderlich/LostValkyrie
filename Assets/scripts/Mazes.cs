@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System;
 
 public static class Mazes
 {
@@ -46,8 +45,7 @@ public static class Mazes
 
     private static Node PopHashElement(HashSet<Node> theSet, bool removeAfter=true)
     {
-        System.Random rnd = new System.Random();
-        int thatEl = rnd.Next(theSet.Count);
+        int thatEl = (int)Random.Range(0f, theSet.Count);
         Node chosen = theSet.ElementAt(thatEl);
         if (removeAfter)
         {
@@ -73,15 +71,14 @@ public static class Mazes
     private static Node[] RandomizeArray(Node[] arr)
     {
         int len = arr.Length;
-        System.Random rnd = new System.Random();
         Node[] arrRand = new Node[len];
         HashSet<int> done = new HashSet<int>();
         int newPlace;
         int newInd;
         for (int i = 0; i < len; i++)
         {
-            newPlace = rnd.Next(len);
-            for(int j = 0; j < len; j++)
+            newPlace = (int)Random.Range(0f, len);
+            for (int j = 0; j < len; j++)
             {
                 newInd = (newPlace + j) % len;
                 if(!done.Contains(newInd))
@@ -99,7 +96,6 @@ public static class Mazes
     private static void DfsUtil(Graph g, Node currNode, HashSet<Node> visited)
     {
         visited.Add(currNode);
-        Debug.Log(visited.Count);//XXX it doesn't work without this, why though?
         Node[] shuffled = RandomizeArray(currNode.adjNodes.ToArray());
         foreach(Node neighbor in shuffled)
         {
@@ -112,7 +108,7 @@ public static class Mazes
     }
 
     /**
-     * has yet to be completed, for now just gives unmodified grid
+     * use iterative version, this one gets stack overflow at sizes at around 200x200 but otherwise works fine
      */
     public static Graph DfsPath(int width, int height)
     {
@@ -123,6 +119,41 @@ public static class Mazes
         DfsUtil(g, currNode, visited);
 
         //AddBorder(g, width, height);
+        return g;
+    }
+
+    public static Graph DfsIter(int width, int height)
+    {
+        Graph g = BaseGraph(width, height);
+        HashSet<Node> visited = new HashSet<Node>();
+        Stack<Node> stack = new Stack<Node>();
+        stack.Push(g.vertices.Values.First());
+
+        Node current;
+        Node last = null;
+        while(stack.Count > 0)
+        {
+            current = stack.Pop();
+
+            if (!visited.Contains(current))
+            {
+                visited.Add(current);
+                if(last != null)
+                {
+                    g.RemoveEdge(current, last);
+                }
+            }
+
+            foreach (Node neighbor in RandomizeArray(current.adjNodes.ToArray()))
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    stack.Push(neighbor);
+                }
+            }
+
+            last = current;
+        }
         return g;
     }
 

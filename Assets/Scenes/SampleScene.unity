@@ -235,8 +235,8 @@ MonoBehaviour:
     grid: 0
     dfs: 1
     prims: 0
-  width: 10
-  height: 10
+  width: 100
+  height: 100
   expand: 1
   makeMaze: 0
 --- !u!1 &705507993

@@ -17,7 +17,7 @@ when one of these is done update it here like this
 - bring over maze generation logic from the python project
 
 
-   1. dfs  
+   1. ~~dfs~~  
    2. ~~prims~~  
    3. kris kringle  
    

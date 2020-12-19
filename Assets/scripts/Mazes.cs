@@ -140,7 +140,8 @@ public static class Mazes
                 visited.Add(current);
                 if(last != null)
                 {
-                    g.RemoveEdge(current, last);
+                     g.RemoveEdge(current, last);
+
                 }
             }
 

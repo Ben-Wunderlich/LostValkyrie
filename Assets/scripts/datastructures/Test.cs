@@ -18,12 +18,14 @@ public class Test : MonoBehaviour
 
     public int width=15;
     public int height = 15;
+    [Tooltip("how big to make the graph display")]
     public float expand = 1;
+    [Tooltip("when checked will make a maze the next frame")]
     public bool makeMaze = false;
 
     // Start is called before the first frame update
 
-    void GraphCheck(Graph g)
+    void DisplayGraph(Graph g)
     {
         foreach (Node el in g.vertices.Values)
         {
@@ -43,11 +45,9 @@ public class Test : MonoBehaviour
         {
             return;//will be drawn on second frame anyway
         }
-        Graph g = Mazes.PrimPath(width, height);
-        //Graph g = Mazes.DfsPath(width, height);
-        //Graph g = Mazes.BaseGraph(width, height);
-        GraphCheck(g);
-        //Debug.Log(g.ToStr());
+        //Graph g = Mazes.PrimPath(width, height);
+        Graph g = Mazes.DfsPath(width, height);
+        DisplayGraph(g);
         
         /*HashSet<int> a = new HashSet<int>();
         HashSet<int> b = new HashSet<int>();
@@ -57,14 +57,6 @@ public class Test : MonoBehaviour
         Debug.Log("a has " + a.Count);
         Debug.Log("b has " + b.Count);*/
 
-
-        /*System.Random rnd = new System.Random();
-        int thatEl;
-        for(int i = 0; i < 10; i++)
-        {
-            thatEl = rnd.Next();
-            Debug.Log(thatEl);
-        }*/
     }
 
     private void Update()
@@ -76,21 +68,19 @@ public class Test : MonoBehaviour
             if (mazeSettings.grid)
             {
                 Graph grid = Mazes.BaseGraph(width, height);
-                GraphCheck(grid);
+                DisplayGraph(grid);
             }
             if (mazeSettings.dfs)
             {
                 //Graph dfs = Mazes.DfsPath(width, height);
                 Graph dfs = Mazes.DfsIter(width, height);
-                GraphCheck(dfs);
+                DisplayGraph(dfs);
             }
             if (mazeSettings.prims)
             {
                 Graph prims = Mazes.PrimPath(width, height);
-                GraphCheck(prims);
+                DisplayGraph(prims);
             }
-            //Graph g = Mazes.PrimPath(width, height);
-            //Debug.Log(g.ToStr());
             if(!(mazeSettings.dfs || mazeSettings.prims || mazeSettings.grid))
             {
                 Graph nuall = new Graph(10, 10);
@@ -100,7 +90,7 @@ public class Test : MonoBehaviour
                 nuall.AddEdge((6, 0), (6, 9));
                 nuall.AddEdge((5, 0), (7,0));
                 nuall.AddEdge((5, 9), (7, 9));
-                GraphCheck(nuall);
+                DisplayGraph(nuall);
 
             }
         }

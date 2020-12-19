@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Text;
@@ -14,7 +13,7 @@ public class Graph
 
     public Graph(int width, int height)
     {
-        // Debug.Log("numnodes is " + numNodes);
+        // Debug.Log("numnodes is " + width*height);
         numVertices = width * height;
         for(int i=0; i < width; i++)
         {

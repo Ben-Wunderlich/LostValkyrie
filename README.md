@@ -15,15 +15,12 @@ when one of these is done update it here like this
 - ~~create graph data structure~~
 - create disjoint set data structure
 - bring over maze generation logic from the python project
-
-
    1. ~~dfs~~  
    2. ~~prims~~  
    3. kris kringle  
    
-- make basic wall assets
-- make script that converts a graph to walls (note that wherever there is an edge there should be a wall)
-- add outer walls for each maze tile
+- ~~make script that converts a graph to walls~~
+- ~~add outer walls for each maze tile~~
 
 ## things to do after that
 - generate maze tiles based on proximity

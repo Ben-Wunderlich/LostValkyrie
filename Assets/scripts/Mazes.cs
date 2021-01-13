@@ -7,7 +7,7 @@ public static class Mazes
 {
     public static Graph BaseGraph(int width, int height)
     {
-        Graph g = new Graph(width, height);
+        Graph g = new Graph();
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -22,13 +22,14 @@ public static class Mazes
                 }
             }
         }
+
         return g;
     }
 
     /**
-     * Does not work the way the name would make you thing, makes it look a bit nicer but thats all
+     * Does not work the way the name would make you thing, is now useless, kept just in case
      */
-    static void AddBorder(Graph g, int width, int height)
+    /*static void AddBorder(Graph g, int width, int height)
     {
         for (int i = 0; i < width - 1; i++)
         {
@@ -41,7 +42,7 @@ public static class Mazes
             g.AddEdge((0, j), (0, j + 1));
             g.AddEdge((width - 1, j), (width - 1, j + 1));
         }
-    }
+    }*/
 
     private static Node PopHashElement(HashSet<Node> theSet, bool removeAfter=true)
     {
@@ -125,12 +126,13 @@ public static class Mazes
     public static Graph DfsIter(int width, int height)
     {
         Graph g = BaseGraph(width, height);
+        Graph inverse = new Graph();
         HashSet<Node> visited = new HashSet<Node>();
         Stack<Node> stack = new Stack<Node>();
+        Dictionary<Node, Node> exploredFrom = new Dictionary<Node, Node>();
         stack.Push(g.vertices.Values.First());
 
         Node current;
-        Node last = null;
         while(stack.Count > 0)
         {
             current = stack.Pop();
@@ -138,30 +140,38 @@ public static class Mazes
             if (!visited.Contains(current))
             {
                 visited.Add(current);
-                if(last != null)
+                if (exploredFrom.ContainsKey(current))
                 {
-                     g.RemoveEdge(current, last);
-
+                    g.RemoveEdge(current, exploredFrom[current]);
+                    inverse.AddEdge(current.vals, exploredFrom[current].vals);
                 }
+                //g.RemoveEdge(current, last);
+                //inverse.AddEdge(current.vals, last.vals);
             }
 
             foreach (Node neighbor in RandomizeArray(current.adjNodes.ToArray()))
             {
                 if (!visited.Contains(neighbor))
                 {
-                    stack.Push(neighbor);
+                    if (!exploredFrom.ContainsKey(neighbor))
+                    {
+                        stack.Push(neighbor);
+                        exploredFrom.Add(neighbor, current);
+                    }
                 }
             }
 
-            last = current;
         }
-        return g;
+        return inverse;
+        //return g;
     }
 
 
     public static Graph PrimPath(int width, int height)
     {
+        Debug.Log("doing prims");
         Graph g = BaseGraph(width, height);
+        Graph inverse = new Graph();
 
         HashSet<Node> neighbors = new HashSet<Node>();
         HashSet<Node> marked = new HashSet<Node>();
@@ -180,18 +190,17 @@ public static class Mazes
                 if(MarkedCount(adjNode, picked, marked) == 1)
                 {
                     g.RemoveEdge(adjNode, picked);
+                    inverse.AddEdge(adjNode.vals, picked.vals);
                     //UnityEngine.Debug.Assert(false);
                     //Debug.Log("removed " + adjNode.vals.ToString() + " to " + picked.vals.ToString());
                     neighbors.UnionWith(picked.adjNodes);
-                    //XXX come here if things goo south with path finding
                     break;
                 }
             }
             marked.Add(picked);
         }
 
-        //AddBorder(g, width, height);
-        return g;
+        return inverse;
     }
 
 }

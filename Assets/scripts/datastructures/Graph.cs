@@ -4,24 +4,23 @@ using System.Linq;
 using System.Text;
 public class Graph
 {
-    private readonly int numVertices;
     public Dictionary<(int, int), Node> vertices = new Dictionary<(int, int), Node>();
 
 
     // A utility function to add an edge in an  
     // undirected graph  
 
-    public Graph(int width, int height)
+    public Graph()
     {
         // Debug.Log("numnodes is " + width*height);
-        numVertices = width * height;
+        /*numVertices = width * height;
         for(int i=0; i < width; i++)
         {
             for(int j = 0; j < height; j++)
             {
                 AddVertex((i, j));
             }
-        }
+        }*/
     }
 
     private Node AddVertex((int,int) coords)
@@ -57,6 +56,13 @@ public class Graph
         toNode.AddAdj(fromNode);
     }
 
+    //incomplete, need to ad dif not there already
+    /*public void AddEdge(Node from, Node to)
+    {
+        from.AddAdj(to);
+        to.AddAdj(from);
+    }*/
+
     public void RemoveEdge((int, int) from, (int, int) to)
     {
         Node fromNode = vertices[from];
@@ -70,6 +76,17 @@ public class Graph
     {
         from.RemoveAdj(to);
         to.RemoveAdj(from);
+    }
+
+    //XXX should have error handling for if is invalid  values, not in dict
+    public void RemoveVertex((int, int) values)//could also do node version for completeness
+    {
+        Node deathVertex = vertices[values];
+        foreach(Node neighbor in deathVertex.adjNodes)//get rid of it from adjacent nodes
+        {
+            neighbor.RemoveAdj(deathVertex);
+        }
+        vertices.Remove(values);
     }
 
     public List<(int, int)> GetNodes()
@@ -93,7 +110,7 @@ public class Graph
 
     public string ToStr()
     {
-        StringBuilder sb = new StringBuilder(numVertices*10);
+        StringBuilder sb = new StringBuilder(200);
         foreach(Node val in vertices.Values)
         {
             sb.Append(val.vals.ToString()+ " is linked to ");

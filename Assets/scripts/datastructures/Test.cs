@@ -14,7 +14,7 @@ public class Test : MonoBehaviour
         public bool prims = true;
     }
     public VariableHolder mazeSettings = new VariableHolder();
-
+    private GraphToMaze converterInst;
 
     public int width=15;
     public int height = 15;
@@ -41,12 +41,14 @@ public class Test : MonoBehaviour
 
     void Start()
     {
+        converterInst = GetComponent<GraphToMaze>();
         if (makeMaze)
         {
             return;//will be drawn on second frame anyway
         }
         //Graph g = Mazes.PrimPath(width, height);
-        Graph g = Mazes.DfsPath(width, height);
+        Graph g = Mazes.DfsIter(width, height);
+        converterInst.MakeWalls(g);
         DisplayGraph(g);
         
         /*HashSet<int> a = new HashSet<int>();
@@ -69,21 +71,24 @@ public class Test : MonoBehaviour
             {
                 Graph grid = Mazes.BaseGraph(width, height);
                 DisplayGraph(grid);
+                converterInst.MakeWalls(grid);
             }
             if (mazeSettings.dfs)
             {
                 //Graph dfs = Mazes.DfsPath(width, height);
                 Graph dfs = Mazes.DfsIter(width, height);
                 DisplayGraph(dfs);
+                converterInst.MakeWalls(dfs);
             }
             if (mazeSettings.prims)
             {
                 Graph prims = Mazes.PrimPath(width, height);
                 DisplayGraph(prims);
+                converterInst.MakeWalls(prims);
             }
             if(!(mazeSettings.dfs || mazeSettings.prims || mazeSettings.grid))
             {
-                Graph nuall = new Graph(10, 10);
+                Graph nuall = new Graph();
                 nuall.AddEdge((0,0), (0,9));
                 nuall.AddEdge((3,0), (3,9));
                 nuall.AddEdge((0, 4), (3, 4));
@@ -91,6 +96,7 @@ public class Test : MonoBehaviour
                 nuall.AddEdge((5, 0), (7,0));
                 nuall.AddEdge((5, 9), (7, 9));
                 DisplayGraph(nuall);
+                converterInst.MakeWalls(nuall);
 
             }
         }

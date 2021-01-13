@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 484679877}
   - component: {fileID: 484679876}
   - component: {fileID: 484679880}
+  - component: {fileID: 484679881}
   m_Layer: 0
   m_Name: TESTING
   m_TagString: Untagged
@@ -235,10 +236,24 @@ MonoBehaviour:
     grid: 0
     dfs: 1
     prims: 0
-  width: 40
-  height: 40
+  width: 10
+  height: 10
   expand: 1
-  makeMaze: 0
+  makeMaze: 1
+--- !u!114 &484679881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 484679875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5039bd392e4a8f4b8f7e152d5a5a0b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallPrefab: {fileID: 6662609722101493312, guid: ef116f6a19faa45468090b2679be10b8, type: 3}
+  parentPrefab: {fileID: 1566017039583895269, guid: 087536c2715a4e245abddc4bdd0e8be0, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +442,7 @@ GameObject:
   - component: {fileID: 1419783454}
   - component: {fileID: 1419783453}
   m_Layer: 0
-  m_Name: Floor
+  m_Name: floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

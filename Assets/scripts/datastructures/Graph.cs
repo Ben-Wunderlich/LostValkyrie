@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 public class Graph
 {
-    public Dictionary<(int, int), Node> vertices = new Dictionary<(int, int), Node>();
+    public Dictionary<(int, int), Node> vertices;
 
 
     // A utility function to add an edge in an  
@@ -12,15 +12,7 @@ public class Graph
 
     public Graph()
     {
-        // Debug.Log("numnodes is " + width*height);
-        /*numVertices = width * height;
-        for(int i=0; i < width; i++)
-        {
-            for(int j = 0; j < height; j++)
-            {
-                AddVertex((i, j));
-            }
-        }*/
+        vertices = new Dictionary<(int, int), Node>();
     }
 
     private Node AddVertex((int,int) coords)
@@ -55,13 +47,6 @@ public class Graph
         fromNode.AddAdj(toNode);
         toNode.AddAdj(fromNode);
     }
-
-    //incomplete, need to ad dif not there already
-    /*public void AddEdge(Node from, Node to)
-    {
-        from.AddAdj(to);
-        to.AddAdj(from);
-    }*/
 
     public void RemoveEdge((int, int) from, (int, int) to)
     {

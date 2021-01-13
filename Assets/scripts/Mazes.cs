@@ -26,31 +26,13 @@ public static class Mazes
         return g;
     }
 
-    /**
-     * Does not work the way the name would make you thing, is now useless, kept just in case
-     */
-    /*static void AddBorder(Graph g, int width, int height)
-    {
-        for (int i = 0; i < width - 1; i++)
-        {
-            g.AddEdge((i, 0), (i + 1, 0));
-            g.AddEdge((i, height - 1), (i + 1, height - 1));
-        }
-
-        for (int j = 0; j < height - 1; j++)
-        {
-            g.AddEdge((0, j), (0, j + 1));
-            g.AddEdge((width - 1, j), (width - 1, j + 1));
-        }
-    }*/
-
     private static Node PopHashElement(HashSet<Node> theSet, bool removeAfter=true)
     {
         int thatEl = (int)Random.Range(0f, theSet.Count);
         Node chosen = theSet.ElementAt(thatEl);
         if (removeAfter)
         {
-            theSet.Remove(chosen);//XXX check to see if that is doing what it should
+            theSet.Remove(chosen);
         }
         return chosen;
     }
@@ -142,7 +124,7 @@ public static class Mazes
                 visited.Add(current);
                 if (exploredFrom.ContainsKey(current))
                 {
-                    g.RemoveEdge(current, exploredFrom[current]);
+                    //g.RemoveEdge(current, exploredFrom[current]);
                     inverse.AddEdge(current.vals, exploredFrom[current].vals);
                 }
                 //g.RemoveEdge(current, last);
@@ -169,7 +151,6 @@ public static class Mazes
 
     public static Graph PrimPath(int width, int height)
     {
-        Debug.Log("doing prims");
         Graph g = BaseGraph(width, height);
         Graph inverse = new Graph();
 
@@ -189,7 +170,7 @@ public static class Mazes
             {
                 if(MarkedCount(adjNode, picked, marked) == 1)
                 {
-                    g.RemoveEdge(adjNode, picked);
+                    //g.RemoveEdge(adjNode, picked);
                     inverse.AddEdge(adjNode.vals, picked.vals);
                     //UnityEngine.Debug.Assert(false);
                     //Debug.Log("removed " + adjNode.vals.ToString() + " to " + picked.vals.ToString());

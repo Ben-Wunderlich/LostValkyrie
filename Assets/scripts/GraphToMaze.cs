@@ -7,7 +7,10 @@ public class GraphToMaze : MonoBehaviour
     public Transform wallPrefab;
     public Transform parentPrefab;
 
-    private HashSet<(float, float)> createdWalls = new HashSet<(float, float)>();
+    private float wallOffset;
+    private float wallExpansion;
+
+    private readonly HashSet<(float, float)> createdWalls = new HashSet<(float, float)>();
     public void GenerateWall(float xPos, float zPos, float rotation, Transform wallParent)
     {
         Instantiate(wallPrefab, new Vector3(xPos, 5, zPos), Quaternion.Euler(0f, rotation, 0f), wallParent);
@@ -42,10 +45,10 @@ public class GraphToMaze : MonoBehaviour
             }
         }
 
-        int wallOffset = 5;
-        float expansion = 10;
-        float xSize = nodeX * expansion;
-        float ySize = nodeY * expansion;
+        //int wallOffset = 5;
+        //float expansion = 10;
+        float xSize = nodeX * wallExpansion;
+        float ySize = nodeY * wallExpansion;
 
         if (up && !createdWalls.Contains((xSize, ySize+wallOffset)))
         {
@@ -89,15 +92,11 @@ public class GraphToMaze : MonoBehaviour
         }
     }
     // Start is called before the first frame update
-   /* void Start()
-    {
-        Graph g = Mazes
-        MakeWalls(g);
-    }*/
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+   void Start()
+   {
+        Transform temp = Instantiate(wallPrefab);//XXX is messy, should find better solution
+        wallExpansion =  temp.localScale.x;
+        wallOffset = wallExpansion / 2;
+        Destroy(temp.gameObject);
+   }
 }

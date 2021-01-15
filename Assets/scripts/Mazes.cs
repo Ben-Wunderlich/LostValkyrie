@@ -7,7 +7,7 @@ public static class Mazes
 {
     public static Graph BaseGraph(int width, int height)
     {
-        Graph g = new Graph();
+        Graph g = new Graph("GridMaze");
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -51,6 +51,9 @@ public static class Mazes
         return markCounter;
     }
 
+    /**
+     * returns a shuffled version of the input
+     */
     private static Node[] RandomizeArray(Node[] arr)
     {
         int len = arr.Length;
@@ -91,7 +94,8 @@ public static class Mazes
     }
 
     /**
-     * use iterative version, this one gets stack overflow at sizes at around 200x200 but otherwise works fine
+     * This is a recursive Dfs inplementation.
+     * Better to use iterative version, this one gets stack overflow at sizes at around 200x200 but otherwise works fine
      */
     public static Graph DfsPath(int width, int height)
     {
@@ -101,14 +105,13 @@ public static class Mazes
         visited.Add(currNode);
         DfsUtil(g, currNode, visited);
 
-        //AddBorder(g, width, height);
         return g;
     }
 
     public static Graph DfsIter(int width, int height)
     {
         Graph g = BaseGraph(width, height);
-        Graph inverse = new Graph();
+        Graph pathGraph = new Graph("DfsMaze");
         HashSet<Node> visited = new HashSet<Node>();
         Stack<Node> stack = new Stack<Node>();
         Dictionary<Node, Node> exploredFrom = new Dictionary<Node, Node>();
@@ -124,11 +127,8 @@ public static class Mazes
                 visited.Add(current);
                 if (exploredFrom.ContainsKey(current))
                 {
-                    //g.RemoveEdge(current, exploredFrom[current]);
-                    inverse.AddEdge(current.vals, exploredFrom[current].vals);
+                    pathGraph.AddEdge(current.vals, exploredFrom[current].vals);
                 }
-                //g.RemoveEdge(current, last);
-                //inverse.AddEdge(current.vals, last.vals);
             }
 
             foreach (Node neighbor in RandomizeArray(current.adjNodes.ToArray()))
@@ -144,15 +144,14 @@ public static class Mazes
             }
 
         }
-        return inverse;
-        //return g;
+        return pathGraph;
     }
 
 
     public static Graph PrimPath(int width, int height)
     {
         Graph g = BaseGraph(width, height);
-        Graph inverse = new Graph();
+        Graph pathGraph = new Graph("PrimsMaze");
 
         HashSet<Node> neighbors = new HashSet<Node>();
         HashSet<Node> marked = new HashSet<Node>();
@@ -171,17 +170,92 @@ public static class Mazes
                 if(MarkedCount(adjNode, picked, marked) == 1)
                 {
                     //g.RemoveEdge(adjNode, picked);
-                    inverse.AddEdge(adjNode.vals, picked.vals);
+                    pathGraph.AddEdge(adjNode.vals, picked.vals);
                     //UnityEngine.Debug.Assert(false);
                     //Debug.Log("removed " + adjNode.vals.ToString() + " to " + picked.vals.ToString());
                     neighbors.UnionWith(picked.adjNodes);
+                    marked.Add(adjNode);
                     break;
                 }
             }
             marked.Add(picked);
         }
 
-        return inverse;
+        return pathGraph;
     }
 
+    /**
+     * this is not a maze, I was just bored one night
+     */
+    public static Graph BfsPath(int width, int height)
+    {
+        Graph g = BaseGraph(width, height);
+        Graph pathGraph = new Graph("BfsMaze");
+
+        Queue<Node> nodeQueue = new Queue<Node>();
+        HashSet<Node> marked = new HashSet<Node>();
+
+        Node current = g.GetSomeVertice();
+        marked.Add(current);
+        nodeQueue.Enqueue(current);
+
+        while(nodeQueue.Count > 0)
+        {
+            current = nodeQueue.Dequeue();
+            foreach (Node adjNode in current.adjNodes)
+            {
+                if (!marked.Contains(adjNode))
+                {
+                    marked.Add(adjNode);
+                    nodeQueue.Enqueue(adjNode);
+                    pathGraph.AddEdge(current.vals, adjNode.vals);
+                }
+            }
+        }
+
+        return pathGraph;
+    }
+
+    /**
+     * XXX Has not been implemented yet, needs disjoint set first
+     */
+    public static Graph KruskalPath(int width, int height)
+    {
+        Graph g = BaseGraph(width, height);
+        return g;
+    }
+
+    public static Graph DefaultPath(int width, int height)
+    {
+        Graph g = new Graph();
+
+        int threeWidth = width * 3;
+        int sixWidth = width * 6;
+
+        int twoHeight = height * 2;
+        int threeHeight = height * 3;
+        int fiveHeight = height * 5;
+        int fourFiveHeight = height * 4 + height / 2;
+
+        for (int i=0;i < height*5; i++)
+        {
+            g.AddEdge((0, i), (0, i + 1));
+            g.AddEdge((threeWidth, i), (threeWidth, i+1));
+        }
+
+        for(int i=0; i < threeHeight; i++)
+        {
+            g.AddEdge((sixWidth, i), (sixWidth, i + 1));
+        }
+        for (int i = 0; i < threeWidth; i++)
+        {
+            g.AddEdge((i, twoHeight), (i+1, twoHeight));
+        }
+
+        for(int i = fourFiveHeight; i < fiveHeight; i++)
+        {
+            g.AddEdge((sixWidth, i), (sixWidth, i + 1));
+        }
+        return g;
+    }
 }

@@ -234,8 +234,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mazeSettings:
     grid: 0
-    dfs: 1
-    prims: 0
+    dfs: 0
+    prims: 1
+    bfs: 0
   width: 10
   height: 10
   expand: 1

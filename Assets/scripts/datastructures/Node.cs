@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class Node
 {
@@ -16,11 +14,6 @@ public class Node
     {
         adjNodes.Add(newNeighbor);
     }
-
-    /*public HashSet<Node> getAdj()
-    {
-        return adjNodes;
-    }*/
 
     public void RemoveAdj(Node formerNeighbor)
     {

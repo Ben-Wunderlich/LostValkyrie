@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using System;
 
 public class Test : MonoBehaviour
@@ -12,6 +11,8 @@ public class Test : MonoBehaviour
         public bool grid=false;
         public bool dfs = false;
         public bool prims = true;
+        [Tooltip("Not a maze, I was just bored")]
+        public bool bfs = false;
     }
     public VariableHolder mazeSettings = new VariableHolder();
     private GraphToMaze converterInst;
@@ -25,6 +26,10 @@ public class Test : MonoBehaviour
 
     // Start is called before the first frame update
 
+    /**
+     * Will show a red line where each edge is
+     * lines will dissapear after 2 seconds
+     */
     void DisplayGraph(Graph g)
     {
         foreach (Node el in g.vertices.Values)
@@ -48,16 +53,10 @@ public class Test : MonoBehaviour
         }
         //Graph g = Mazes.PrimPath(width, height);
         Graph g = Mazes.DfsIter(width, height);
+        //Graph g = Mazes.BfsPath(width, height);
+        //Graph g = Mazes.BaseGraph(10, 10);
         converterInst.MakeWalls(g);
         DisplayGraph(g);
-        
-        /*HashSet<int> a = new HashSet<int>();
-        HashSet<int> b = new HashSet<int>();
-        a.Add(1);
-        b.Add(2);
-        a.UnionWith(b);
-        Debug.Log("a has " + a.Count);
-        Debug.Log("b has " + b.Count);*/
 
     }
 
@@ -86,15 +85,16 @@ public class Test : MonoBehaviour
                 DisplayGraph(prims);
                 converterInst.MakeWalls(prims);
             }
-            if(!(mazeSettings.dfs || mazeSettings.prims || mazeSettings.grid))
+            if (mazeSettings.bfs)
             {
-                Graph nuall = new Graph();
-                nuall.AddEdge((0,0), (0,9));
-                nuall.AddEdge((3,0), (3,9));
-                nuall.AddEdge((0, 4), (3, 4));
-                nuall.AddEdge((6, 0), (6, 9));
-                nuall.AddEdge((5, 0), (7,0));
-                nuall.AddEdge((5, 9), (7, 9));
+                Graph path = Mazes.BfsPath(width, height);
+                DisplayGraph(path);
+                converterInst.MakeWalls(path);
+            }
+
+            if (!(mazeSettings.dfs || mazeSettings.prims || mazeSettings.grid || mazeSettings.bfs))
+            {
+                Graph nuall = Mazes.DefaultPath(width, height);
                 DisplayGraph(nuall);
                 converterInst.MakeWalls(nuall);
 

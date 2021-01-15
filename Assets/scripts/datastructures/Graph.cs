@@ -1,18 +1,19 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 public class Graph
 {
     public Dictionary<(int, int), Node> vertices;
-
+    public string pathType;
 
     // A utility function to add an edge in an  
     // undirected graph  
 
-    public Graph()
+    public Graph(string pathName="unknownMazeType")
     {
         vertices = new Dictionary<(int, int), Node>();
+        pathType = pathName;
     }
 
     private Node AddVertex((int,int) coords)
@@ -53,8 +54,7 @@ public class Graph
         Node fromNode = vertices[from];
         Node toNode = vertices[to];
 
-        fromNode.RemoveAdj(toNode);
-        toNode.RemoveAdj(fromNode);
+        RemoveEdge(fromNode, toNode);
     }
 
     public void RemoveEdge(Node from, Node to)
@@ -63,9 +63,13 @@ public class Graph
         to.RemoveAdj(from);
     }
 
-    //XXX should have error handling for if is invalid  values, not in dict
     public void RemoveVertex((int, int) values)//could also do node version for completeness
     {
+        if (!vertices.ContainsKey(values))//is invalid
+        {
+            return;
+        }
+
         Node deathVertex = vertices[values];
         foreach(Node neighbor in deathVertex.adjNodes)//get rid of it from adjacent nodes
         {
@@ -74,6 +78,9 @@ public class Graph
         vertices.Remove(values);
     }
 
+    /**
+     * returns all nodes in graph
+     */
     public List<(int, int)> GetNodes()
     {
         return vertices.Keys.ToList();
@@ -81,10 +88,15 @@ public class Graph
 
     public Node GetSomeVertice()
     {
-        return vertices.Values.First();
+
+        int thatEl = (int)Random.Range(0f, vertices.Values.Count);
+        //return vertices.Values.First();
+        return vertices.Values.ElementAt(thatEl);
     }
 
     /**
+     * This is an optional function that would just make it more efficient,
+     * would be called after maze generation
      * removed dual links so they are all one way
      * XXX not finished, feel free to complete it, whoever is reading this
      */
@@ -93,6 +105,9 @@ public class Graph
         return this;
     }
 
+    /** 
+     * Was used when first making things, is no longer very useful
+     */
     public string ToStr()
     {
         StringBuilder sb = new StringBuilder(200);

@@ -7,8 +7,8 @@ public class GraphToMaze : MonoBehaviour
     public Transform wallPrefab;
     public Transform parentPrefab;
 
-    private float wallOffset;
-    private float wallExpansion;
+    private float wallOffset=5;
+    private float wallExpansion=10;
 
     private readonly HashSet<(float, float)> createdWalls = new HashSet<(float, float)>();
     public void GenerateWall(float xPos, float zPos, float rotation, Transform wallParent)
@@ -16,7 +16,6 @@ public class GraphToMaze : MonoBehaviour
         Instantiate(wallPrefab, new Vector3(xPos, 5, zPos), Quaternion.Euler(0f, rotation, 0f), wallParent);
     }
 
-    //makes every walll twice
     private void MakeSurroundWalls(Node node, Transform wallParent)
     {
         bool up, left, right, down;
@@ -45,8 +44,6 @@ public class GraphToMaze : MonoBehaviour
             }
         }
 
-        //int wallOffset = 5;
-        //float expansion = 10;
         float xSize = nodeX * wallExpansion;
         float ySize = nodeY * wallExpansion;
 
@@ -78,12 +75,13 @@ public class GraphToMaze : MonoBehaviour
         return ((float)first + (float)second) / 2;
     }
 
-    public void MakeWalls(Graph newGraph)
+    public void MakeWalls(Graph g)
     {
         createdWalls.Clear();
 
         Transform wallParent = Instantiate(parentPrefab);
-        foreach(Node el in newGraph.vertices.Values)
+        wallParent.gameObject.name = g.pathType;
+        foreach(Node el in g.vertices.Values)
         {
             foreach (Node neighbor in el.adjNodes)
             {
@@ -91,10 +89,11 @@ public class GraphToMaze : MonoBehaviour
             }
         }
     }
-    // Start is called before the first frame update
+
    void Start()
    {
-        Transform temp = Instantiate(wallPrefab);//XXX is messy, should find better solution
+        //XXX is messy, should find better solution to find dimensions without making an instance
+        Transform temp = Instantiate(wallPrefab);
         wallExpansion =  temp.localScale.x;
         wallOffset = wallExpansion / 2;
         Destroy(temp.gameObject);

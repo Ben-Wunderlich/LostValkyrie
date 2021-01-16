@@ -4,7 +4,7 @@ a procedurally generated labyrinth game
 
 I have been developing the basic maze generation logic [here](https://github.com/Ben-Wunderlich/pylabyrinth)
 
-We will be using unity version 2020.1.17f1 which can be installed from [Unity Hub](https://unity3d.com/get-unity/download)
+We will be using unity version 2020.1.0f1 which can be installed from [Unity Hub](https://unity3d.com/get-unity/download)
 
 You won't be able to contribute to the repo yet, let me know what your github account name is and I will add you as a contributer
 

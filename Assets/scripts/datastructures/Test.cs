@@ -52,7 +52,7 @@ public class Test : MonoBehaviour
             return;//will be drawn on second frame anyway
         }
         //Graph g = Mazes.PrimPath(width, height);
-        Graph g = Mazes.DfsIter(width, height);
+        Graph g = Mazes.DfsPath(width, height);
         //Graph g = Mazes.BfsPath(width, height);
         //Graph g = Mazes.BaseGraph(10, 10);
         converterInst.MakeWalls(g, width, height);
@@ -74,8 +74,8 @@ public class Test : MonoBehaviour
             }
             if (mazeSettings.dfs)
             {
-                //Graph dfs = Mazes.DfsPath(width, height);
-                Graph dfs = Mazes.DfsIter(width, height);
+                Graph dfs = Mazes.DfsPath(width, height);
+                //Graph dfs = Mazes.DfsIter(width, height);
                 DisplayGraph(dfs);
                 converterInst.MakeWalls(dfs, width, height);
             }

@@ -320,18 +320,18 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484679875}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3f0c5c395f374b429caf23794e6afb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mazeSettings:
-    grid: 1
-    dfs: 0
+    grid: 0
+    dfs: 1
     prims: 0
     bfs: 0
-  width: 3
-  height: 10
+  width: 20
+  height: 20
   expand: 1
   makeMaze: 1
 --- !u!114 &484679881
@@ -358,13 +358,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 484679875}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 356d23eadd12b07458179be897cd789f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceToGive: 3
-  blockSize: 15
+  spaceToGive: 1
+  blockSize: 21
   moveThreshold: 20
 --- !u!1 &705507993
 GameObject:

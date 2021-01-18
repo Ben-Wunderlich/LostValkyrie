@@ -11,25 +11,20 @@ public class WallManager : MonoBehaviour
     //width of the blocks
     public int blockSize = 15;
 
-    //how long till checks if need to create or delete blocks
+    //how far till checks if need to create or delete blocks
     public float moveThreshold = 20;
 
 
     private float moveThresholdSq;
     private GraphToMaze wallMaker;
     private Vector2 oldPos;
-    private Queue<(int, int)> blockQueue = new Queue<(int, int)>();
-    /*
-     * Transform stores link to object
-     */
+    private readonly Queue<(int, int)> blockQueue = new Queue<(int, int)>();
     private Dictionary<(int, int), Transform> wallBlobs;
-    //private LinkedList<Transform> wallBlobs;
 
     void Start()
     {
         wallMaker = FindObjectOfType<GraphToMaze>();
         moveThresholdSq = moveThreshold * moveThreshold;
-        //wallBlobs = new LinkedList<Transform>();
         wallBlobs = new Dictionary<(int, int), Transform>();
 
 
@@ -37,7 +32,6 @@ public class WallManager : MonoBehaviour
         UpdateWalls(true);
     }
 
-    // Update is called once per frame
     (int, int) BlockTag(Transform target, float blockDimensions)
     {
         int xPos = Mathf.RoundToInt(target.position.x / blockDimensions);
@@ -48,13 +42,16 @@ public class WallManager : MonoBehaviour
     private void CreateBlock((int, int) blockLocation, int dimensions)
     {
         Graph maze;
-        switch(Random.Range(0, 2))
+        switch(Random.Range(0, 3))
         {
             case 0:
-                maze = Mazes.DfsIter(blockSize, blockSize);
+                maze = Mazes.DfsPath(blockSize, blockSize);
                 break;
             case 1:
                 maze = Mazes.PrimPath(blockSize, blockSize);
+                break;
+            case 2:
+                maze = Mazes.BaseGraph(blockSize, blockSize);
                 break;
             default:
                 maze = Mazes.DefaultPath(blockSize, blockSize);
@@ -123,7 +120,7 @@ public class WallManager : MonoBehaviour
 
     void Update()
     {
-        if(blockQueue.Count > 0)
+        if(blockQueue.Count > 0)//if a block to be created
         {
             CreateBlock(blockQueue.Dequeue(), Mathf.RoundToInt(wallMaker.wallExpansion * blockSize));
         }

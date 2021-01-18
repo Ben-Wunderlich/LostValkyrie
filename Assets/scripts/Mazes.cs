@@ -5,9 +5,9 @@ using System.Linq;
 
 public static class Mazes
 {
-    public static Graph BaseGraph(int width, int height)
+    public static Graph BaseGraph(int width, int height, string name= "GridMaze")
     {
-        Graph g = new Graph("GridMaze");
+        Graph g = new Graph(name);
         for (int i = 0; i < width; i++)
         {
             for (int j = 0; j < height; j++)
@@ -79,39 +79,46 @@ public static class Mazes
         return arrRand;
     }
 
-    private static void DfsUtil(Graph g, Node currNode, HashSet<Node> visited)
+    private static void DfsUtil(Graph g, Graph path, Node currNode, HashSet<Node> visited)
     {
         visited.Add(currNode);
         Node[] shuffled = RandomizeArray(currNode.adjNodes.ToArray());
-        foreach(Node neighbor in shuffled)
+        foreach (Node neighbor in shuffled)
         {
             if (!visited.Contains(neighbor))
             {
-                g.RemoveEdge(currNode, neighbor);
-                DfsUtil(g, neighbor, visited);
+                //g.RemoveEdge(currNode, neighbor);
+                path.AddEdge(currNode.vals, neighbor.vals);
+                DfsUtil(g, path, neighbor, visited);
             }
         }
     }
 
     /**
-     * This is a recursive Dfs inplementation.
-     * Better to use iterative version, this one gets stack overflow at sizes at around 200x200 but otherwise works fine
+     * This is a recursive Dfs inplementation. reaches stack overflow around 200x200
+     * switches to iterative if too big to do with stack
      */
     public static Graph DfsPath(int width, int height)
     {
+        if(width * height > 22500)
+        {
+            return DfsIter(width, height);
+        }
+
+        Graph path = new Graph("DfsMaze");
         Graph g = BaseGraph(width, height);
         HashSet<Node> visited = new HashSet<Node>();
         Node currNode = g.vertices.Values.First();
         visited.Add(currNode);
-        DfsUtil(g, currNode, visited);
+        DfsUtil(g, path, currNode, visited);
 
-        return g;
+        return path;
     }
 
     public static Graph DfsIter(int width, int height)
     {
         Graph g = BaseGraph(width, height);
-        Graph pathGraph = new Graph("DfsMaze");
+        Graph pathGraph = new Graph("DfsUtilMaze");
         HashSet<Node> visited = new HashSet<Node>();
         Stack<Node> stack = new Stack<Node>();
         Dictionary<Node, Node> exploredFrom = new Dictionary<Node, Node>();

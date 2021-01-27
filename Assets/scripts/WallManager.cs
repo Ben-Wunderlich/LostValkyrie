@@ -39,10 +39,11 @@ public class WallManager : MonoBehaviour
         return (xPos, yPos);
     }
 
+
     private void CreateBlock((int, int) blockLocation, int dimensions)
     {
         Graph maze;
-        switch(Random.Range(0, 3))
+        switch(Random.Range(0, 2))
         {
             case 0:
                 maze = Mazes.DfsPath(blockSize, blockSize);
@@ -58,7 +59,7 @@ public class WallManager : MonoBehaviour
                 break;
         }
 
-        Transform newObj = wallMaker.MakeWalls(maze, blockSize, blockSize);
+        Transform newObj = wallMaker.MakeWalls(maze, blockSize, blockSize, blockLocation);
 
         newObj.transform.position = new Vector3(blockLocation.Item1 * dimensions, 
             newObj.transform.position.y, blockLocation.Item2*dimensions);

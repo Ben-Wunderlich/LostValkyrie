@@ -32,3 +32,5 @@ sysinfo.txt
 /*.tmp
 /*.svd
 *.meta
+
+BuildTest/

@@ -14,6 +14,7 @@ public class GraphToMaze : MonoBehaviour
     private readonly HashSet<(float, float)> createdWalls = new HashSet<(float, float)>();
     public void GenerateWall(float xPos, float zPos, float rotation, Transform wallParent)
     {
+
         Instantiate(wallPrefab, new Vector3(xPos, 5, zPos), Quaternion.Euler(0f, rotation, 0f), wallParent);
     }
 
@@ -50,6 +51,7 @@ public class GraphToMaze : MonoBehaviour
 
         if (up && !createdWalls.Contains((xSize, ySize+wallOffset)))
         {
+
             GenerateWall(xSize, ySize + wallOffset, 0, wallParent);
             createdWalls.Add((xSize, ySize + wallOffset));
         }
@@ -90,9 +92,51 @@ public class GraphToMaze : MonoBehaviour
             mazeHeight * wallExpansion / 10);//XXX only works because plane has 1:10 ration
     }
 
-    public Transform MakeWalls(Graph g, int mazeWidth, int mazeHeight)
+    /**
+     * adds walls that will not be added as walls to create connections
+     * is not perfect and is pretty predictable since on a line will always make at same poition if going along a straight line
+     */
+    private int[] AddWallHash((int, int) block, int width, int height)
+    {
+        //goes top, right, bot, left
+        int[] passageLocation = new int[4];
+        passageLocation[0] = (int)((block.Item2 + 0.5) * 73) % width;
+        passageLocation[1] = (int)((block.Item1 + 0.5) * 73) % height;
+        passageLocation[2] = (int)((block.Item2 - 0.5) * 73) % width;
+        passageLocation[3] = (int)((block.Item1 - 0.5) * 73) % height;
+
+        for(int i = 0; i < 4; i++)
+        {
+            if(passageLocation[i] < 0)
+            {
+                passageLocation[i] *= -1;
+            }
+        }
+
+        float minX = -wallOffset;
+        float minY = -wallOffset;
+        float maxX = ((width-1) * wallExpansion) + wallOffset;
+        float maxY = ((height-1) * wallExpansion) + wallOffset;
+
+        float topX = (passageLocation[0] * wallExpansion);
+        float rightY = (passageLocation[1] * wallExpansion);
+        float botX = (passageLocation[2] * wallExpansion);
+        float leftY = (passageLocation[3] * wallExpansion);
+
+        createdWalls.Add((topX, maxY));//top
+        createdWalls.Add((maxX, rightY));//right
+        createdWalls.Add((botX, minY));//bot
+        createdWalls.Add((minX, leftY));//left
+        return passageLocation;
+    }
+
+    public Transform MakeWalls(Graph g, int mazeWidth, int mazeHeight, (int, int) origin)
     {
         createdWalls.Clear();
+
+        AddWallHash(origin, mazeWidth, mazeHeight);
+        //int[] wallSpaces = WallHash()
+        //XXX maybe put this where get made, in wall manager and call something in this
 
         Transform wallParent = Instantiate(parentPrefab);
         wallParent.gameObject.name = g.pathType;

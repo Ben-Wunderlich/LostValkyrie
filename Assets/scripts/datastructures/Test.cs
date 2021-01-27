@@ -55,7 +55,7 @@ public class Test : MonoBehaviour
         Graph g = Mazes.DfsPath(width, height);
         //Graph g = Mazes.BfsPath(width, height);
         //Graph g = Mazes.BaseGraph(10, 10);
-        converterInst.MakeWalls(g, width, height);
+        converterInst.MakeWalls(g, width, height, (0,0));
         DisplayGraph(g);
 
     }
@@ -70,33 +70,33 @@ public class Test : MonoBehaviour
             {
                 Graph grid = Mazes.BaseGraph(width, height);
                 DisplayGraph(grid);
-                converterInst.MakeWalls(grid, width, height);
+                converterInst.MakeWalls(grid, width, height, (0,0));
             }
             if (mazeSettings.dfs)
             {
                 Graph dfs = Mazes.DfsPath(width, height);
                 //Graph dfs = Mazes.DfsIter(width, height);
                 DisplayGraph(dfs);
-                converterInst.MakeWalls(dfs, width, height);
+                converterInst.MakeWalls(dfs, width, height, (0, 0));
             }
             if (mazeSettings.prims)
             {
                 Graph prims = Mazes.PrimPath(width, height);
                 DisplayGraph(prims);
-                converterInst.MakeWalls(prims, width, height);
+                converterInst.MakeWalls(prims, width, height, (0, 0));
             }
             if (mazeSettings.bfs)
             {
                 Graph path = Mazes.BfsPath(width, height);
                 DisplayGraph(path);
-                converterInst.MakeWalls(path, width, height);
+                converterInst.MakeWalls(path, width, height, (0, 0));
             }
 
             if (!(mazeSettings.dfs || mazeSettings.prims || mazeSettings.grid || mazeSettings.bfs))
             {
                 Graph nuall = Mazes.DefaultPath(width, height);
                 DisplayGraph(nuall);
-                converterInst.MakeWalls(nuall, width, height);
+                converterInst.MakeWalls(nuall, width, height, (0, 0));
 
             }
         }

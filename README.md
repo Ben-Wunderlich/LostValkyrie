@@ -24,7 +24,7 @@ when one of these is done update it here like this
 
 ## things to do after that
 - ~~generate maze tiles based on proximity~~
-- add connections between walls(could be done at tile creation)
+- ~~add connections between walls(could be done at tile creation)~~
 - ~~sort out how floor works~~
 
 ## optional things at end

@@ -13,7 +13,7 @@ public class WallManager : MonoBehaviour
 
     //how far till checks if need to create or delete blocks
     public float moveThreshold = 20;
-
+    public Transform player;
 
     private float moveThresholdSq;
     private GraphToMaze wallMaker;
@@ -28,7 +28,7 @@ public class WallManager : MonoBehaviour
         wallBlobs = new Dictionary<(int, int), Transform>();
 
 
-        oldPos = new Vector2(this.transform.position.x, this.transform.position.z);
+        oldPos = new Vector2(player.transform.position.x, player.transform.position.z);
         UpdateWalls(true);
     }
 
@@ -82,7 +82,7 @@ public class WallManager : MonoBehaviour
         HashSet<(int, int)> UsedBlocks = new HashSet<(int, int)>();
 
         int blockDimensions = Mathf.RoundToInt(wallMaker.wallExpansion * blockSize);
-        (int, int) currBlock = BlockTag(this.transform, blockDimensions);
+        (int, int) currBlock = BlockTag(player.transform, blockDimensions);
     
         for(int i = currBlock.Item1 - spaceToGive; i < currBlock.Item1+spaceToGive; i++)
         {
@@ -126,7 +126,7 @@ public class WallManager : MonoBehaviour
             CreateBlock(blockQueue.Dequeue(), Mathf.RoundToInt(wallMaker.wallExpansion * blockSize));
         }
 
-        Vector2 currPos = new Vector2(this.transform.position.x, this.transform.position.z);
+        Vector2 currPos = new Vector2(player.transform.position.x, player.transform.position.z);
         float distFromLast = (oldPos - currPos).sqrMagnitude;
 
         if(distFromLast > moveThresholdSq)//things could have changed

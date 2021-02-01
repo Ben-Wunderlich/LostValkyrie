@@ -7,9 +7,6 @@ public class Graph
     public Dictionary<(int, int), Node> vertices;
     public string pathType;
 
-    // A utility function to add an edge in an  
-    // undirected graph  
-
     public Graph(string pathName="unknownMazeType")
     {
         vertices = new Dictionary<(int, int), Node>();
@@ -86,11 +83,13 @@ public class Graph
         return vertices.Keys.ToList();
     }
 
+    /**
+     * returns a random vertice from the graph
+     */
     public Node GetSomeVertice()
     {
 
         int thatEl = (int)Random.Range(0f, vertices.Values.Count);
-        //return vertices.Values.First();
         return vertices.Values.ElementAt(thatEl);
     }
 

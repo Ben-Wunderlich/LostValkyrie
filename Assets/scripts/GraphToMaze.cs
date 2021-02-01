@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class GraphToMaze : MonoBehaviour
@@ -154,12 +153,12 @@ public class GraphToMaze : MonoBehaviour
         return wallParent;
     }
 
-   void Start()
+   /*void Start()
    {
-        //XXX is messy, should find better solution to find dimensions without making an instance
+        //is messy, should find better solution to find dimensions without making an instance
         Transform temp = Instantiate(wallPrefab);
-        wallExpansion =  temp.localScale.x;
-        wallOffset = wallExpansion / 2;
+        //wallExpansion =  temp.localScale.x;
+        //wallOffset = wallExpansion / 2;
         Destroy(temp.gameObject);
-   }
+   }*/
 }

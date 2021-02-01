@@ -178,8 +178,6 @@ public static class Mazes
                 {
                     //g.RemoveEdge(adjNode, picked);
                     pathGraph.AddEdge(adjNode.vals, picked.vals);
-                    //UnityEngine.Debug.Assert(false);
-                    //Debug.Log("removed " + adjNode.vals.ToString() + " to " + picked.vals.ToString());
                     neighbors.UnionWith(picked.adjNodes);
                     marked.Add(adjNode);
                     break;

@@ -363,10 +363,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 356d23eadd12b07458179be897cd789f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spaceToGive: 1
-  blockSize: 10
+  spaceToGive: 4
+  blockSize: 5
   moveThreshold: 20
   player: {fileID: 1137677836}
+  useMazeQueue: 1
 --- !u!1 &591708669
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,7 +396,7 @@ Transform:
   m_GameObject: {fileID: 591708669}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 1, z: 2}
   m_Children: []
   m_Father: {fileID: 1137677836}
   m_RootOrder: 0
@@ -409,7 +410,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 591708669}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
@@ -664,7 +665,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137677835}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 9.18, z: 80}
+  m_LocalPosition: {x: 0, y: 15.47, z: 80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 591708670}
@@ -704,12 +705,12 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 2
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 1.09
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &1307696375
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,16 +4,16 @@ using System.Linq;
 
 public class WallManager : MonoBehaviour
 {
-    //how many spaces to keep aorund the player
-    
+    [Tooltip("how many blocks to keep around the player")]
     public int spaceToGive = 1;
 
-    //width of the blocks
+    [Tooltip("how big each block is")]
     public int blockSize = 15;
 
-    //how far till checks if need to create or delete blocks
+    [Tooltip("how far till checks if need to create or delete blocks")]
     public float moveThreshold = 20;
     public Transform player;
+    public bool useMazeQueue = false;
 
     private float moveThresholdSq;
     private GraphToMaze wallMaker;
@@ -29,7 +29,7 @@ public class WallManager : MonoBehaviour
 
 
         oldPos = new Vector2(player.transform.position.x, player.transform.position.z);
-        UpdateWalls(true);
+        UpdateWalls(!useMazeQueue);//making true will have all walls be spawned already for first frame instead of using queue
     }
 
     (int, int) BlockTag(Transform target, float blockDimensions)
@@ -43,7 +43,7 @@ public class WallManager : MonoBehaviour
     private void CreateBlock((int, int) blockLocation, int dimensions)
     {
         Graph maze;
-        switch(Random.Range(0, 2))
+        switch(Random.Range(0, 3))
         {
             case 0:
                 maze = Mazes.DfsPath(blockSize, blockSize);
